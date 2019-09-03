@@ -5,7 +5,10 @@
  * based on:
  * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
  */
-const HBS_SEQUENCES = [[/^<\/?([A-Z]{1}([\w]*?))(?=(\s|\/?>|$))/, /^$/, true]];
+const HBS_SEQUENCES = [
+  [/<\/?([A-Z]{1}([.\w]*))(?=[\s\w\S]*>)/, '/</tag>$/', true],
+  [/<\/?([A-Z]{1}([.\w]*))(?=(\s\/>|$))/, /^$/, true]
+];
 
 module.exports = function handlebarsPlugin(md) {
   md.block.ruler.before('html_block', 'handlebars', function(
@@ -19,9 +22,11 @@ module.exports = function handlebarsPlugin(md) {
 
     let lineText = state.src.slice(pos, max);
 
-    let i;
+    let i, result, tag;
     for (i = 0; i < HBS_SEQUENCES.length; i++) {
-      if (HBS_SEQUENCES[i][0].test(lineText)) {
+      result = HBS_SEQUENCES[i][0].exec(lineText);
+      if (result !== null) {
+        tag = result[1];
         break;
       }
     }
@@ -39,7 +44,13 @@ module.exports = function handlebarsPlugin(md) {
 
     // If we are here - we detected HTML block.
     // Let's roll down till block end.
-    if (!HBS_SEQUENCES[i][1].test(lineText)) {
+
+    const closingMatch =
+      typeof HBS_SEQUENCES[i][1] === 'string'
+        ? new RegExp(HBS_SEQUENCES[i][1].replace('tag', tag))
+        : HBS_SEQUENCES[i][1];
+
+    if (!closingMatch.test(lineText)) {
       for (; nextLine < endLine; nextLine++) {
         if (state.sCount[nextLine] < state.blkIndent) {
           break;
@@ -49,7 +60,7 @@ module.exports = function handlebarsPlugin(md) {
         max = state.eMarks[nextLine];
         lineText = state.src.slice(pos, max);
 
-        if (HBS_SEQUENCES[i][1].test(lineText)) {
+        if (closingMatch.test(lineText)) {
           if (lineText.length !== 0) {
             nextLine++;
           }

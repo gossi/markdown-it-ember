@@ -31,6 +31,21 @@ Angle bracket components with arguments and block
 </MyComponent>
 .
 
+Angle bracket components with arguments, block and yield
+.
+<MyComponent @param={{foo}} as |my|>
+  <my.Foo>Hello</my.Foo>
+
+  <my.Bar>World</my.Bar>
+</MyComponent>
+.
+<MyComponent @param={{foo}} as |my|>
+  <my.Foo>Hello</my.Foo>
+
+  <my.Bar>World</my.Bar>
+</MyComponent>
+.
+
 curly braces
 .
 {{#my-component}}{{/my-component}}
