@@ -1,0 +1,39 @@
+Inline Angle bracket components
+.
+<MyComponent />
+.
+<MyComponent />
+.
+
+
+Angle bracket components
+.
+<MyComponent></MyComponent>
+.
+<MyComponent></MyComponent>
+.
+
+Angle bracket components with arguments
+.
+<MyComponent @param={{foo}}></MyComponent>
+.
+<MyComponent @param={{foo}}></MyComponent>
+.
+
+Angle bracket components with arguments and block
+.
+<MyComponent @param={{foo}}>
+  hello world
+</MyComponent>
+.
+<MyComponent @param={{foo}}>
+  hello world
+</MyComponent>
+.
+
+curly braces
+.
+{{#my-component}}{{/my-component}}
+.
+{{#my-component}}{{/my-component}}
+-

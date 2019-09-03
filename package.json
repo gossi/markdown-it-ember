@@ -1,0 +1,17 @@
+{
+  "name": "markdown-it-handlebars",
+  "version": "0.0.1",
+  "description": "handlebars parser for markdown-it",
+  "main": "index.js",
+  "author": "Thomas Gossmann",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "markdown-it": "^9.1.0",
+    "markdown-it-testgen": "^0.1.6"
+  }
+}
