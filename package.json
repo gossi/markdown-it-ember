@@ -1,11 +1,25 @@
 {
   "name": "markdown-it-handlebars",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "handlebars parser for markdown-it",
-  "main": "index.js",
-  "author": "Thomas Gossmann",
+  "homepage": "https://github.com/gossi/markdown-it-handlebars",
+  "author": {
+    "name": "Thomas Gossmann",
+    "url": "https://gos.si"
+  },
   "license": "MIT",
-  "private": false,
+  "keywords": [
+    "markdown-it",
+    "markdown-it-plugin",
+    "handlebars",
+    "glimmer",
+    "glimmerjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gossi/markdown-it-handlebars.git"
+  },
+  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
