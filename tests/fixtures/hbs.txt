@@ -1,8 +1,24 @@
 Inline Angle bracket components
 .
+<MyComponent/>
+.
+<MyComponent/>
+.
+
+Inline Angle bracket components with space
+.
 <MyComponent />
 .
 <MyComponent />
+.
+
+Inline Angle bracket components with args
+.
+<MyComponent @foo="yes" 
+@bar="no" />
+.
+<MyComponent @foo="yes" 
+@bar="no" />
 .
 
 

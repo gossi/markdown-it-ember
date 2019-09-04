@@ -7,7 +7,7 @@
  */
 const HBS_SEQUENCES = [
   [/<\/?([A-Z]{1}([.\w]*))(?=[\s\w\S]*>)/, '/</tag>$/', true],
-  [/<\/?([A-Z]{1}([.\w]*))(?=(\s\/>|$))/, /^$/, true]
+  [/<\/?([A-Z]{1}([.\w]*))(?=[\s\w\S]*?\/?>?)/, /\/?>$/, true]
 ];
 
 module.exports = function handlebarsPlugin(md) {
