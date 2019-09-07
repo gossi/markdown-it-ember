@@ -1,8 +1,8 @@
 {
-  "name": "markdown-it-handlebars",
-  "version": "0.0.2",
-  "description": "handlebars parser for markdown-it",
-  "homepage": "https://github.com/gossi/markdown-it-handlebars",
+  "name": "markdown-it-ember",
+  "version": "0.0.0",
+  "description": "markdown-it parser for ember template",
+  "homepage": "https://github.com/gossi/markdown-it-ember",
   "author": {
     "name": "Thomas Gossmann",
     "url": "https://gos.si"
@@ -11,13 +11,15 @@
   "keywords": [
     "markdown-it",
     "markdown-it-plugin",
+    "ember",
+    "htmlbars",
     "handlebars",
     "glimmer",
     "glimmerjs"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gossi/markdown-it-handlebars.git"
+    "url": "https://github.com/gossi/markdown-it-ember.git"
   },
   "main": "index.js",
   "scripts": {

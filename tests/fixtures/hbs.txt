@@ -1,18 +1,37 @@
-Inline Angle bracket components
+[Inline, SL, AB]
 .
 <MyComponent/>
 .
 <MyComponent/>
 .
 
-Inline Angle bracket components with space
+[Inline, SL, AB] with whitespace
 .
 <MyComponent />
 .
 <MyComponent />
 .
 
-Inline Angle bracket components with args
+[Inline, SL, AB] with whitespace and sub component
+.
+<My::Component />
+.
+<My::Component />
+.
+
+[Inline, ML, AB] with args on multiple lines
+.
+<MyComponent @foo="yes" 
+@bar="no" />
+
+after
+.
+<MyComponent @foo="yes" 
+@bar="no" />
+<p>after</p>
+.
+
+[Inline, ML, AB] with args on multiple lines (last line)
 .
 <MyComponent @foo="yes" 
 @bar="no" />
@@ -21,50 +40,219 @@ Inline Angle bracket components with args
 @bar="no" />
 .
 
+[Inline, ML, AB] with args on multiple lines and sub component
+.
+<My::Component @foo="yes" 
+@bar="no" />
 
-Angle bracket components
+after
+.
+<My::Component @foo="yes" 
+@bar="no" />
+<p>after</p>
+.
+
+
+[Block, SL, AB] 
 .
 <MyComponent></MyComponent>
+
+after
 .
 <MyComponent></MyComponent>
+<p>after</p>
 .
 
-Angle bracket components with arguments
+[Block, SL, AB] with arguments
 .
 <MyComponent @param={{foo}}></MyComponent>
+
+after
 .
 <MyComponent @param={{foo}}></MyComponent>
+<p>after</p>
 .
 
-Angle bracket components with arguments and block
+[Block, ML, AB] with arguments and block content
 .
 <MyComponent @param={{foo}}>
   hello world
 </MyComponent>
+
+after
 .
 <MyComponent @param={{foo}}>
   hello world
 </MyComponent>
+<p>after</p>
 .
 
-Angle bracket components with arguments, block and yield
+[Block, ML, AB] with arguments, block content and yield
 .
 <MyComponent @param={{foo}} as |my|>
   <my.Foo>Hello</my.Foo>
 
   <my.Bar>World</my.Bar>
 </MyComponent>
+
+after
 .
 <MyComponent @param={{foo}} as |my|>
   <my.Foo>Hello</my.Foo>
 
   <my.Bar>World</my.Bar>
 </MyComponent>
+<p>after</p>
 .
 
-curly braces
+[Block, ML, AB] with arguments, block content and yield and sub component
+.
+<My::Component @param={{foo}} as |my|>
+  <my.Foo>Hello</my.Foo>
+
+  <my.Bar>World</my.Bar>
+</My::Component>
+
+after
+.
+<My::Component @param={{foo}} as |my|>
+  <my.Foo>Hello</my.Foo>
+
+  <my.Bar>World</my.Bar>
+</My::Component>
+<p>after</p>
+.
+
+
+[Mixed, ML, AB] with everything
+.
+<My::Component @param={{foo}} as |my|>
+  <my.Foo as |f|>
+    <f.Bar 
+    />
+  </my.Foo>
+
+  <my.Bar>World</my.Bar>
+</My::Component>
+
+after
+.
+<My::Component @param={{foo}} as |my|>
+  <my.Foo as |f|>
+    <f.Bar 
+    />
+  </my.Foo>
+
+  <my.Bar>World</my.Bar>
+</My::Component>
+<p>after</p>
+.
+
+[Block, ML, AB] Nested components
+.
+<Demo @source="card.hbs">
+<Card>
+Simplest Card
+</Card>
+</Demo>
+
+after
+.
+<Demo @source="card.hbs">
+<Card>
+Simplest Card
+</Card>
+</Demo>
+<p>after</p>
+.
+
+[Block, SL, CB]
 .
 {{#my-component}}{{/my-component}}
+
+after
 .
 {{#my-component}}{{/my-component}}
--
+<p>after</p>
+.
+
+[AB] Fenced block
+.
+```
+<MyComponent/>
+```
+
+after
+.
+<pre><code>&lt;MyComponent/&gt;
+</code></pre>
+<p>after</p>
+.
+
+[AB] Fenced block with language
+.
+```hbs
+<MyComponent/>
+```
+
+after
+.
+<pre><code class="language-hbs">&lt;MyComponent/&gt;
+</code></pre>
+<p>after</p>
+.
+
+[AB] Inline Fenced
+.
+text with a `<MyComponent/>` inside
+.
+<p>text with a <code>&lt;MyComponent/&gt;</code> inside</p>
+.
+
+[AB] Inline Fenced with sub-component
+.
+text with a `<My::Component/>` inside
+.
+<p>text with a <code>&lt;My::Component/&gt;</code> inside</p>
+.
+
+[CB] Fenced block
+.
+```
+{{MyComponent}}
+```
+
+after
+.
+<pre><code>\{{MyComponent}}
+</code></pre>
+<p>after</p>
+.
+
+[CB] Fenced block with language
+.
+```hbs
+{{MyComponent}}
+```
+
+after
+.
+<pre><code class="language-hbs">\{{MyComponent}}
+</code></pre>
+<p>after</p>
+.
+
+[CB] Inline Fenced
+.
+text with a `{{MyComponent}}` inside
+.
+<p>text with a <code>\{{MyComponent}}</code> inside</p>
+.
+
+[CB] Inline Fenced with sub-component
+.
+text with a `{{My::Component}}` inside
+.
+<p>text with a <code>\{{My::Component}}</code> inside</p>
+.
+
