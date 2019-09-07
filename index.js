@@ -1,23 +1,5 @@
 'use strict';
 
-/*
- * Handlebars regex and handler for markdown-it
- * based on:
- * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
- */
-const HBS_SEQUENCES = [
-  // [/^<\/?([A-Z]{1}([.:\w]*))(?=[\s\w\S]*>)/, '</tag>$', true],
-
-  // // <My::Component/>
-  // [/^<([A-Z]{1}([.:\w]*))(?=[\s\w\S]*?\/>)/, /\/>$/, true],
-
-  // <My::Component></My::Component>
-  [, '(/>|</tag>)$', true],
-
-  // {{#my-component}}{{/my-component}}
-  [, , true]
-];
-
 const START_ANGLE_BRACKETS = /^<([A-Z]{1}([.:\w]*))(?=[\s\w\S]*\/?>?)/;
 const END_ANGLE_BRACKETS_INLINE = /\/>$/;
 const END_ANGLE_BRACKETS_BLOCK = '</tag>$';
@@ -27,6 +9,36 @@ const START = {
   'angle-brackets': START_ANGLE_BRACKETS,
   curlies: START_CURLIES
 };
+
+function findEnd(regex, tag, state, nextLine, endLine, initialText) {
+  const closingMatch =
+    typeof regex === 'string' ? new RegExp(regex.replace('tag', tag)) : regex;
+
+  let found = closingMatch.test(initialText);
+  let pos, max, lineText;
+
+  if (!found) {
+    for (; nextLine < endLine; nextLine++) {
+      if (state.sCount[nextLine] < state.blkIndent) {
+        break;
+      }
+
+      pos = state.bMarks[nextLine] + state.tShift[nextLine];
+      max = state.eMarks[nextLine];
+      lineText = state.src.slice(pos, max);
+
+      if (closingMatch.test(lineText)) {
+        if (lineText.length !== 0) {
+          nextLine++;
+        }
+        found = true;
+        break;
+      }
+    }
+  }
+
+  return found ? nextLine : false;
+}
 
 module.exports = function emberPlugin(md) {
   //
@@ -58,15 +70,6 @@ module.exports = function emberPlugin(md) {
       return false;
     }
 
-    // for (i = 0; i < ObjectHBS_SEQUENCES.length; i++) {
-    //   result = HBS_SEQUENCES[i][0].exec(lineText);
-
-    // }
-
-    // if (i === HBS_SEQUENCES.length) {
-    //   return false;
-    // }
-
     if (silent) {
       // true if this sequence can be a terminator, false otherwise
       return true;
@@ -74,70 +77,31 @@ module.exports = function emberPlugin(md) {
 
     let nextLine = startLine + 1;
 
-    // If we are here - we detected HTML block.
+    // If we are here - we detected ember blocks.
     // Let's roll down till block end.
 
-    function findEnd(regex, state, nextLine, endLine, initialText) {
-      const closingMatch =
-        typeof regex === 'string'
-          ? new RegExp(regex.replace('tag', tag))
-          : regex;
-
-      let found = closingMatch.test(initialText);
-      let pos, max, lineText;
-
-      if (!found) {
-        for (; nextLine < endLine; nextLine++) {
-          if (state.sCount[nextLine] < state.blkIndent) {
-            break;
-          }
-
-          pos = state.bMarks[nextLine] + state.tShift[nextLine];
-          max = state.eMarks[nextLine];
-          lineText = state.src.slice(pos, max);
-
-          if (closingMatch.test(lineText)) {
-            if (lineText.length !== 0) {
-              nextLine++;
-            }
-            found = true;
-            break;
-          }
-        }
-      }
-
-      return found ? nextLine : false;
-    }
-
+    let result;
     if (type === 'curlies') {
-      nextLine = findEnd(END_CURLIES, state, nextLine, endLine, lineText);
+      result = findEnd(END_CURLIES, tag, state, nextLine, endLine, lineText);
     } else {
       // first find end for block invocation
-      let result = findEnd(
-        END_ANGLE_BRACKETS_BLOCK,
-        state,
-        nextLine,
-        endLine,
-        lineText
-      );
-
       // second find end for inline invocation (if block isn't found)
-      if (result === false) {
-        result = findEnd(
-          END_ANGLE_BRACKETS_INLINE,
-          state,
-          nextLine,
-          endLine,
-          lineText
-        );
+      const regexes = [END_ANGLE_BRACKETS_BLOCK, END_ANGLE_BRACKETS_INLINE];
+
+      for (const regex of regexes) {
+        result = findEnd(regex, tag, state, nextLine, endLine, lineText);
+
+        if (result !== false) {
+          break;
+        }
       }
-      nextLine = result;
     }
 
-    if (nextLine === false) {
+    if (result === false) {
       return false;
     }
 
+    nextLine = result;
     state.line = nextLine;
 
     const token = state.push('ember_block', '', 0);
