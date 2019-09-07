@@ -1,10 +1,10 @@
-# markdown-it-ember
+# markdown-it-ember [![Build Status](https://travis-ci.com/gossi/markdown-it-ember.svg?branch=master)](https://travis-ci.com/gossi/markdown-it-ember)
 
 Plugin for markdown-it to parse ember template syntax and persist it.
 
 ## Installation
 
-```txt
+```bash
 yarn add markdown-it-ember
 ```
 
