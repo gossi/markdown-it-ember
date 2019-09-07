@@ -1,5 +1,6 @@
 'use strict';
 
+const INLINE_ANGLE_BRACKETS = /^<([A-Z]{1}([.:\w]*))(?=[\s\w\S]*)([^\/]*\/>|[^<]*(<\/([A-Z]{1}([.:\w]*))>)?)/;
 const START_ANGLE_BRACKETS = /^<([A-Z]{1}([.:\w]*))(?=[\s\w\S]*\/?>?)/;
 const END_ANGLE_BRACKETS_INLINE = /\/>$/;
 const END_ANGLE_BRACKETS_BLOCK = '</tag>$';
@@ -38,6 +39,12 @@ function findEnd(regex, tag, state, nextLine, endLine, initialText) {
   }
 
   return found ? nextLine : false;
+}
+
+function isLetter(ch) {
+  /*eslint no-bitwise:0*/
+  var lc = ch | 0x20; // to lower case
+  return lc >= 0x61 /* a */ && lc <= 0x7a /* z */;
 }
 
 module.exports = function emberPlugin(md) {
@@ -111,10 +118,52 @@ module.exports = function emberPlugin(md) {
     return true;
   });
 
+  md.inline.ruler.before('text', 'ember_inline', function(state, silent) {
+    var ch,
+      match,
+      max,
+      token,
+      pos = state.pos;
+
+    // Check start
+    max = state.posMax;
+    if (state.src.charCodeAt(pos) !== 0x3c /* < */ || pos + 2 >= max) {
+      return false;
+    }
+
+    // Quick fail on second char
+    ch = state.src.charCodeAt(pos + 1);
+    if (
+      ch !== 0x21 /* ! */ &&
+      ch !== 0x3f /* ? */ &&
+      ch !== 0x2f /* / */ &&
+      !isLetter(ch) &&
+      !ch.test(/[A-Z]/)
+    ) {
+      return false;
+    }
+
+    match = state.src.slice(pos).match(INLINE_ANGLE_BRACKETS);
+    if (!match) {
+      return false;
+    }
+
+    if (!silent) {
+      token = state.push('ember_inline', '', 0);
+      token.content = state.src.slice(pos, pos + match[0].length);
+    }
+    state.pos += match[0].length;
+    return true;
+  });
+
   //
   // Renderer
   //
   md.renderer.rules.ember_block = function(tokens, idx /*, options, env */) {
+    return tokens[idx].content;
+  };
+
+  md.renderer.rules.ember_inline = function(tokens, idx /*, options, env */) {
     return tokens[idx].content;
   };
 

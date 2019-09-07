@@ -256,3 +256,24 @@ text with a `{{My::Component}}` inside
 <p>text with a <code>\{{My::Component}}</code> inside</p>
 .
 
+[Paragraph, Block, ML, AB] with args on multiple lines
+.
+Lorem Ipsum <LinkTo @route="foo">bla
+</LinkTo> dolor sit amet
+
+after
+.
+<p>Lorem Ipsum <LinkTo @route="foo">bla
+</LinkTo> dolor sit amet</p>
+<p>after</p>
+.
+
+[Paragraph, Inline, SL, AB] with args on multiple lines
+.
+Lorem Ipsum <Foo/> dolor sit amet
+
+after
+.
+<p>Lorem Ipsum <Foo/> dolor sit amet</p>
+<p>after</p>
+.
