@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-ember",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "markdown-it parser for ember template",
   "homepage": "https://github.com/gossi/markdown-it-ember",
   "author": {
