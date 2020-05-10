@@ -176,7 +176,7 @@ after
 <p>after</p>
 .
 
-[AB] Fenced block
+[Code Block, AB] Fenced block
 .
 ```
 <MyComponent/>
@@ -189,7 +189,20 @@ after
 <p>after</p>
 .
 
-[AB] Fenced block with language
+[Code Block, AB] Fenced block with values and modifiers
+.
+```
+<TextInput disabled={{true}} {{on "click" this.handleClick}}/>
+```
+
+after
+.
+<pre><code>&lt;TextInput disabled=&#123;&#123;true&#125;&#125; &#123;&#123;on &quot;click&quot; this.handleClick&#125;&#125;/&gt;
+</code></pre>
+<p>after</p>
+.
+
+[Code Block, AB] Fenced block with language
 .
 ```hbs
 <MyComponent/>
@@ -202,21 +215,34 @@ after
 <p>after</p>
 .
 
-[AB] Inline Fenced
+[Code Block, AB] Fenced block with values and modifiers and language
+.
+```hbs
+<TextInput disabled={{true}} {{on "click" this.handleClick}}/>
+```
+
+after
+.
+<pre><code class="language-hbs">&lt;TextInput disabled=&#123;&#123;true&#125;&#125; &#123;&#123;on &quot;click&quot; this.handleClick&#125;&#125;/&gt;
+</code></pre>
+<p>after</p>
+.
+
+[Backticks, AB] Inline Fenced
 .
 text with a `<MyComponent/>` inside
 .
 <p>text with a <code>&lt;MyComponent/&gt;</code> inside</p>
 .
 
-[AB] Inline Fenced with sub-component
+[Backticks, AB] Inline Fenced with sub-component
 .
 text with a `<My::Component/>` inside
 .
 <p>text with a <code>&lt;My::Component/&gt;</code> inside</p>
 .
 
-[CB] Fenced block
+[Code Block, CB] Fenced block
 .
 ```
 {{MyComponent}}
@@ -224,12 +250,12 @@ text with a `<My::Component/>` inside
 
 after
 .
-<pre><code>\{{MyComponent}}
+<pre><code>&#123;&#123;MyComponent&#125;&#125;
 </code></pre>
 <p>after</p>
 .
 
-[CB] Fenced block with language
+[Code Block, CB] Fenced block with language
 .
 ```hbs
 {{MyComponent}}
@@ -237,23 +263,23 @@ after
 
 after
 .
-<pre><code class="language-hbs">\{{MyComponent}}
+<pre><code class="language-hbs">&#123;&#123;MyComponent&#125;&#125;
 </code></pre>
 <p>after</p>
 .
 
-[CB] Inline Fenced
+[Backticks, CB] Inline Fenced
 .
 text with a `{{MyComponent}}` inside
 .
-<p>text with a <code>\{{MyComponent}}</code> inside</p>
+<p>text with a <code>&#123;&#123;MyComponent&#125;&#125;</code> inside</p>
 .
 
-[CB] Inline Fenced with sub-component
+[Backticks, CB] Inline Fenced with sub-component
 .
 text with a `{{My::Component}}` inside
 .
-<p>text with a <code>\{{My::Component}}</code> inside</p>
+<p>text with a <code>&#123;&#123;My::Component&#125;&#125;</code> inside</p>
 .
 
 [Paragraph, Block, ML, AB] with args on multiple lines

@@ -168,7 +168,7 @@ module.exports = function emberPlugin(md) {
   };
 
   function replaceCurlies(content) {
-    return content.replace(/{{/gi, '\\{{');
+    return content.replace(/{{/gi, '&#123;&#123;').replace(/}}/gi, '&#125;&#125;');
   }
 
   const defaultFenceRenderer =
